@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Args;
+using Telegram.Bot.Types.ReplyMarkups;
 
 namespace SF_M11_TelegramBot
 {
@@ -41,7 +42,20 @@ namespace SF_M11_TelegramBot
         {
             var text = messanger.CreateTextMessage(chat);
 
-            await botClient.SendTextMessageAsync(chatId: chat.GetId(), text: text);
+            if (text != "Выберите поэта")
+            {
+                await botClient.SendTextMessageAsync(chatId: chat.GetId(), text: text);
+            }
+            else
+            {
+                await SendTextWithKeyBoard(chat, text, messanger.ReturnKeyBoard());
+            }
         }
+
+        private async Task SendTextWithKeyBoard(Conversation chat, string text, InlineKeyboardMarkup keyboard)
+        {
+            await botClient.SendTextMessageAsync(chatId: chat.GetId(), text: text, replyMarkup: keyboard);
+        }
+
     }
 }

@@ -39,5 +39,8 @@ namespace SF_M11_TelegramBot
         }
 
         public long GetId() => telegramChat.Id;
+
+        public string GetLastMessage() => telegramMessages[telegramMessages.Count - 1].Text;
+
     }
 }
