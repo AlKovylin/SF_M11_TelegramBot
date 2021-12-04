@@ -8,7 +8,7 @@
 
 using System;
 
-namespace SF_M11_TelegramBot
+namespace TelegramBot
 {
     class Program
     {

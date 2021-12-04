@@ -1,63 +1,55 @@
-﻿using System;
-using Telegram.Bot;
+﻿using Telegram.Bot;
 using Telegram.Bot.Args;
 
-namespace SF_M11_TelegramBot
+namespace TelegramBot
 {
-    class BotWorker
+    /// <summary>
+    /// Класс основных команд бота.
+    /// </summary>
+   public class BotWorker
     {
-        static private ITelegramBotClient botClient;
-        static private BotMessageLogic logic;
-
+        /// <summary>
+        /// Поле ITelegramBotClient.
+        /// </summary>
+        private ITelegramBotClient botClient;
+        /// <summary>
+        /// Поле BotMessageLogic.
+        /// </summary>
+        private BotMessageLogic logic;
+        /// <summary>
+        /// Создаёт объекты TelegramBotClient и BotMessageLogic.
+        /// </summary>
         public void Inizalize()
         {
             botClient = new TelegramBotClient(BotCredentials.BotToken);
             logic = new BotMessageLogic(botClient);
         }
-
+        /// <summary>
+        /// Запускает бот. Выполняет подписку на событие получения сообщения.
+        /// </summary>
         public void Start()
         {
             botClient.OnMessage += Bot_OnMessage;
-            botClient.OnCallbackQuery += Bot_Callback;
             botClient.StartReceiving();
-        }    
-
+        }
+        /// <summary>
+        /// Завершает работу бота.
+        /// </summary>
         public void Stop()
         {
             botClient.StopReceiving();
         }
-
-        static async void Bot_OnMessage(object sender, MessageEventArgs e)
+        /// <summary>
+        /// Запускает асинхронную процедуру обработки полученного сообщения.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void Bot_OnMessage(object sender, MessageEventArgs e)
         {
-            if (e.Message.Text != null)
+            if (e.Message != null)
             {
                 await logic.Response(e);
             }
-        }
-
-        private async void Bot_Callback(object sender, CallbackQueryEventArgs e)
-        {
-            var text = "";
-
-            switch (e.CallbackQuery.Data)
-            {
-                case "pushkin":
-                    text = @"Я помню чудное мгновенье:
-                                    Передо мной явилась ты,
-                                    Как мимолетное виденье,
-                                    Как гений чистой красоты.";
-                    break;
-                case "esenin":
-                    text = @"Не каждый умеет петь,
-                                Не каждому дано яблоком
-                                Падать к чужим ногам.";
-                    break;
-                default:
-                    break;
-            }
-
-            await botClient.SendTextMessageAsync(e.CallbackQuery.Message.Chat.Id, text);
-            await botClient.AnswerCallbackQueryAsync(e.CallbackQuery.Id);
         }
     }
 }
