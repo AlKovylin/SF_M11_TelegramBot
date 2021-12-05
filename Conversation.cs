@@ -103,29 +103,22 @@ namespace TelegramBot
             Random rand = new Random();
             int item = rand.Next(0, dictionary.Count);
 
-            try
+            Word randomword = dictionary.Values.AsEnumerable().ElementAt(item);
+
+            string text = string.Empty;
+
+            switch (type)
             {
-                Word randomword = dictionary.Values.AsEnumerable().ElementAt(item);
+                case TrainingType.EngToRus:
+                    text = randomword.English;
+                    break;
 
-                string text = string.Empty;
-
-                switch (type)
-                {
-                    case TrainingType.EngToRus:
-                        text = randomword.English;
-                        break;
-
-                    case TrainingType.RusToEng:
-                        text = randomword.Russian;
-                        break;
-                }
-
-                return text;
+                case TrainingType.RusToEng:
+                    text = randomword.Russian;
+                    break;
             }
-            catch(ArgumentNullException)
-            {
-                return "Словарь пуст";
-            }
+
+            return text;
         }
         /// <summary>
         /// Проверяет соответствие перевода.
@@ -154,6 +147,19 @@ namespace TelegramBot
             }
 
             return result;
+        }
+        /// <summary>
+        /// Проверяет наличие слов в словаре.
+        /// </summary>
+        /// <returns></returns>
+        public bool CheckDictionary()
+        {
+            return dictionary.Count > 0 ? true : false;
+        }
+
+        public string ErrMessage()
+        {
+            return "Словарь пуст. Начните с добавления слов.";
         }
     }
 }

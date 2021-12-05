@@ -20,6 +20,12 @@ namespace TelegramBot.Commands
         /// <param name="chat"></param>
         void AddCallBack(Conversation chat);
         /// <summary>
+        /// Проверяет возможность выполнения команды
+        /// </summary>
+        /// <param name="chat"></param>
+        /// <returns></returns>
+        bool CheckPossibility(Conversation chat);        
+        /// <summary>
         /// Функция возвращающая информационное сообщение - пояснение к клавиатуре.
         /// </summary>
         /// <returns></returns>

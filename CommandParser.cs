@@ -65,7 +65,18 @@ namespace TelegramBot
             return command is IKeyBoardCommand;
         }
         /// <summary>
-        /// Возвращает из объекта команды текстовое сообщение о успешности выполнения команды, либо об ошибке.
+        /// Проверяет возможность выполнения команды по дополнительным критериям.
+        /// </summary>
+        /// <param name="chat"></param>
+        /// <returns></returns>
+        public bool ButtonCommandCheckPossibility(string message, Conversation chat)
+        {
+            var command = Command.Find(x => x.CheckMessage(message)) as IKeyBoardCommand;
+
+            return command.CheckPossibility(chat);
+        }
+        /// <summary>
+        /// Возвращает из объекта команды текстовое сообщение об успешности выполнения команды, либо об ошибке.
         /// </summary>
         /// <param name="message"></param>
         /// <param name="chat"></param>
@@ -140,7 +151,7 @@ namespace TelegramBot
             command.StartProcessAsync(chat);
         }
         /// <summary>
-        /// Выполняет переход к следующей стадии.
+        /// Выполняет переход к следующей стадии добавления слова в словарь.
         /// </summary>
         /// <param name="message"></param>
         /// <param name="chat"></param>

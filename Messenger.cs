@@ -94,11 +94,18 @@ namespace TelegramBot
 
             if (parser.IsButtonCommand(command))
             {
-                var keys = parser.GetKeyBoard(command);
-                var text = parser.GetInformationalMeggase(command);
-                parser.AddCallback(command, chat);
+                if (parser.ButtonCommandCheckPossibility(command, chat))
+                {
+                    var keys = parser.GetKeyBoard(command);
+                    var text = parser.GetInformationalMeggase(command);
+                    parser.AddCallback(command, chat);
 
-                await SendTextWithKeyBoard(chat, text, keys);
+                    await SendTextWithKeyBoard(chat, text, keys);
+                }
+                else
+                {
+                    
+                }
             }
 
             if (parser.IsAddingCommand(command))

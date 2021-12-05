@@ -75,18 +75,27 @@ namespace TelegramBot.Commands
             return "Выберите тип тренировки. Для окончания тренировки введите команду /stop";
         }
         /// <summary>
-        /// Выполняет подписку на событие нажатия кнопок клавиатуры.
+        /// Выполняет подписку на событие нажатия кнопок клавиатуры Тренировка.
         /// </summary>
         /// <param name="chat"></param>
         public void AddCallBack(Conversation chat)
         {
-            trainingChats.Add(chat.GetId(), chat);
+            if (chat.CheckDictionary())//если словарь пуст - тренировка не начнётся
+            {
+                trainingChats.Add(chat.GetId(), chat);
 
-            this.botClient.OnCallbackQuery -= Bot_Callback;
-            this.botClient.OnCallbackQuery += Bot_Callback;
+                this.botClient.OnCallbackQuery += Bot_Callback;
+            }
         }
         /// <summary>
-        /// Обработка события нажатия кнопок клавиатуры.
+        /// Отменяет подписку на событие нажатия кнопок клавиатуры Тренировка.
+        /// </summary>
+        private void DelCallBack()
+        {
+            this.botClient.OnCallbackQuery -= Bot_Callback;
+        }
+        /// <summary>
+        /// Обработка события нажатия кнопок клавиатуры Тренировка.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -96,41 +105,39 @@ namespace TelegramBot.Commands
 
             var id = e.CallbackQuery.Message.Chat.Id;
 
-            try
+
+            var chat = trainingChats[id];
+
+            switch (e.CallbackQuery.Data)
             {
-                var chat = trainingChats[id];
+                case "rustoeng":
+                    training.Add(id, TrainingType.RusToEng);
 
-                switch (e.CallbackQuery.Data)
-                {
-                    case "rustoeng":
-                        training.Add(id, TrainingType.RusToEng);
+                    text = chat.GetTrainingWord(TrainingType.RusToEng);
 
-                        text = chat.GetTrainingWord(TrainingType.RusToEng);
+                    break;
+                case "engtorus":
+                    training.Add(id, TrainingType.EngToRus);
 
-                        break;
-                    case "engtorus":
-                        training.Add(id, TrainingType.EngToRus);
-
-                        text = chat.GetTrainingWord(TrainingType.EngToRus);
-                        break;
-                    default:
-                        break;
-                }
-
-                chat.IsTraningInProcess = true;
-                activeWord.Add(id, text);
-
-                if (trainingChats.ContainsKey(id))
-                {
-                    trainingChats.Remove(id);
-                }
+                    text = chat.GetTrainingWord(TrainingType.EngToRus);
+                    break;
+                default:
+                    break;
             }
-            catch
+
+            chat.IsTraningInProcess = true;
+            activeWord.Add(id, text);
+
+            if (trainingChats.ContainsKey(id))
             {
-                text = "Тип тренировки уже выбран. Для начала новой тренировки нужно завершить текущую.";
+                trainingChats.Remove(id);
             }
+
             await botClient.SendTextMessageAsync(id, text);
-            await botClient.AnswerCallbackQueryAsync(e.CallbackQuery.Id, "Не надо жать кнопки без разбора!!!");
+            await botClient.AnswerCallbackQueryAsync(e.CallbackQuery.Id);
+
+            DelCallBack();//чтобы данным экземпляром клавиатуры можно было воспользоваться только один раз
+                          //также устраняет проблему, когда вызвана одна клавиатура, а срабатывает CallBack другой клавиатуры
         }
         /// <summary>
         /// Производит проверку корректности перевода, формирует ответ, отправляет в чат следующее слово.
@@ -155,7 +162,7 @@ namespace TelegramBot.Commands
                 text = "Неправильно!";
             }
 
-            text = text +  " Следующее слово: ";
+            text = text + " Следующее слово: ";
 
             var newword = chat.GetTrainingWord(type);
 
@@ -165,6 +172,15 @@ namespace TelegramBot.Commands
 
 
             await botClient.SendTextMessageAsync(chatId: chat.GetId(), text: text);
+        }
+        /// <summary>
+        /// Проверяет возможность выполнения команды по дополнительным критериям. Здесь наличие слов в словаре конкретного чата.
+        /// </summary>
+        /// <param name="chat"></param>
+        /// <returns></returns>
+        public bool CheckPossibility(Conversation chat)
+        {
+            return chat.CheckDictionary();
         }
     }
 }

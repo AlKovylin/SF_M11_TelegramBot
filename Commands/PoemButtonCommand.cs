@@ -27,16 +27,23 @@ namespace TelegramBot.Commands
             CommandText = "/poembuttons";
         }
         /// <summary>
-        /// Выполняет подписку на событие нажатия кнопок клавиатуры.
+        /// Выполняет подписку на событие нажатия кнопок клавиатуры Поэты.
         /// </summary>
         /// <param name="chat">Чат.</param>
         public void AddCallBack(Conversation chat)
         {
-            this.botClient.OnCallbackQuery -= Bot_Callback;//чтобы не копить подписки
+            //this.botClient.OnCallbackQuery -= Bot_Callback;
             this.botClient.OnCallbackQuery += Bot_Callback;
         }
         /// <summary>
-        /// Обрабатывает событие нажатия кнопок клавиатуры.
+        /// Отменяет подписку на событие нажатия кнопок клавиатуры Тренировка.
+        /// </summary>
+        private void DelCallBack()
+        {
+            this.botClient.OnCallbackQuery -= Bot_Callback;
+        }
+        /// <summary>
+        /// Обрабатывает событие нажатия кнопок клавиатуры Поэты.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -63,6 +70,9 @@ namespace TelegramBot.Commands
 
             await botClient.SendTextMessageAsync(e.CallbackQuery.Message.Chat.Id, text);//отправляем в чат сообщение соответствующее выбору
             await botClient.AnswerCallbackQueryAsync(e.CallbackQuery.Id, "Выбор сделан");//убирает часики на кнопке, позволяет повторное использование кнопок пользователем
+
+            DelCallBack();//чтобы данным экземпляром клавиатуры можно было воспользоваться только один раз
+                          //также устраняет проблему, когда вызвана одна клавиатура, а срабатывает CallBack другой клавиатуры
         }
         /// <summary>
         /// Формирует и возвращает клавиатуру.
@@ -96,6 +106,15 @@ namespace TelegramBot.Commands
         public string InformationalMessage()
         {
             return "Выберите поэта";
+        }
+        /// <summary>
+        /// Проверяет возможность выполнения команды по дополнительным критериям. Здесь наличие слов в словаре конкретного чата.
+        /// </summary>
+        /// <param name="chat"></param>
+        /// <returns></returns>
+        public bool CheckPossibility(Conversation chat)
+        {
+            return true;
         }
     }
 }
