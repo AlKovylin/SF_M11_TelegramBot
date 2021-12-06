@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TelegramBot.Commands
+﻿namespace TelegramBot.Commands
 {
     /// <summary>
     /// Класс команды останавливающей тренировку

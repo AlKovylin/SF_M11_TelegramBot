@@ -156,10 +156,5 @@ namespace TelegramBot
         {
             return dictionary.Count > 0 ? true : false;
         }
-
-        public string ErrMessage()
-        {
-            return "Словарь пуст. Начните с добавления слов.";
-        }
     }
 }

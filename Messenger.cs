@@ -94,17 +94,20 @@ namespace TelegramBot
 
             if (parser.IsButtonCommand(command))
             {
-                if (parser.ButtonCommandCheckPossibility(command, chat))
+                if(parser.IsButtonCommandCheck(command))//если реализует интерфейс IKeyBoardCommandCheck
                 {
-                    var keys = parser.GetKeyBoard(command);
-                    var text = parser.GetInformationalMeggase(command);
-                    parser.AddCallback(command, chat);
-
-                    await SendTextWithKeyBoard(chat, text, keys);
+                    if (parser.ButtonCommandCheckPossibility(command, chat))//если нет препятствий для выполнения
+                    {
+                        await CreatKeyboard(chat, command);//формируем и отправляем в чат клавиатуру
+                    }
+                    else
+                    {
+                        await SendText(chat, parser.GetErrCheckText(command));//отправляем сообщение о невозможности выполнения
+                    }
                 }
-                else
+                else//если не реализует IKeyBoardCommandCheck, то доп. проверка не нужна
                 {
-                    
+                    await CreatKeyboard(chat, command);
                 }
             }
 
@@ -144,6 +147,21 @@ namespace TelegramBot
         private async Task SendTextWithKeyBoard(Conversation chat, string text, InlineKeyboardMarkup keyboard)
         {
             await botClient.SendTextMessageAsync(chatId: chat.GetId(), text: text, replyMarkup: keyboard);
+        }
+        /// <summary>
+        /// Вызывает процедуры: формирование клавиатуры, поясняющего её назначение сообщения, 
+        /// подписки на событие нажатия кнопок, отправку в чат.
+        /// </summary>
+        /// <param name="chat"></param>
+        /// <param name="command"></param>
+        /// <returns></returns>
+        private async Task CreatKeyboard(Conversation chat, string command)
+        {
+            var keys = parser.GetKeyBoard(command);
+            var text = parser.GetInformationalMeggase(command);
+            parser.AddCallback(command, chat);
+
+            await SendTextWithKeyBoard(chat, text, keys);
         }
     }
 }

@@ -21,14 +21,20 @@
         {
             var message = chat.GetLastMessage();
 
-            var text = ClearMessageFromCommand(message);
-
-            if (chat.dictionary.ContainsKey(text))
+            try
             {
-                chat.dictionary.Remove(text);
-                return true;
+                var text = ClearMessageFromCommand(message);
+                if (chat.dictionary.ContainsKey(text))
+                {
+                    chat.dictionary.Remove(text);
+                    return true;
+                }
+                return false;
             }
-            return false; 
+            catch
+            {
+                return false;
+            }            
         }
         /// <summary>
         /// Возвращает сообщение об успешном выполнении команды.

@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Commands\Interfaces\" />
     <Folder Include="EnglishTrainer\" />
   </ItemGroup>
 

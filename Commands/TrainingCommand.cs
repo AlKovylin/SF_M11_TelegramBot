@@ -9,7 +9,7 @@ namespace TelegramBot.Commands
     /// <summary>
     /// Класс команды для проведения тренировки
     /// </summary>
-    public class TrainingCommand : AbstractCommand, IKeyBoardCommand
+    public class TrainingCommand : AbstractCommand, IKeyBoardCommand, IKeyBoardCommandCheck
     {
         /// <summary>
         /// Поле клиента.
@@ -181,6 +181,14 @@ namespace TelegramBot.Commands
         public bool CheckPossibility(Conversation chat)
         {
             return chat.CheckDictionary();
+        }
+        /// <summary>
+        /// Возвращает сообщение если использование клавиатуры не возможно.
+        /// </summary>
+        /// <returns></returns>
+        public string ReturnErrText()
+        {
+            return "Словарь пуст. Начните с добавления слов.";
         }
     }
 }

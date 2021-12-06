@@ -65,18 +65,42 @@ namespace TelegramBot
             return command is IKeyBoardCommand;
         }
         /// <summary>
+        /// Проверяет реализует ли данная команда IKeyBoardCommandCheck.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public bool IsButtonCommandCheck(string message)
+        {
+            var command = Command.Find(x => x.CheckMessage(message));
+
+            return command is IKeyBoardCommandCheck;
+        }
+        /// <summary>
         /// Проверяет возможность выполнения команды по дополнительным критериям.
         /// </summary>
         /// <param name="chat"></param>
         /// <returns></returns>
         public bool ButtonCommandCheckPossibility(string message, Conversation chat)
         {
-            var command = Command.Find(x => x.CheckMessage(message)) as IKeyBoardCommand;
+            var command = Command.Find(x => x.CheckMessage(message)) as IKeyBoardCommandCheck;
 
             return command.CheckPossibility(chat);
         }
         /// <summary>
-        /// Возвращает из объекта команды текстовое сообщение об успешности выполнения команды, либо об ошибке.
+        /// Возвращает сообщение если использование клавиатуры не возможно.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="chat"></param>
+        /// <returns></returns>
+        public string GetErrCheckText(string message)
+        {
+            var command = Command.Find(x => x.CheckMessage(message)) as IKeyBoardCommandCheck;
+
+            return command.ReturnErrText();
+        }
+        /// <summary>
+        /// Возвращает из объекта команды, выполняющей конкретное действие, текстовое 
+        /// сообщение об успешности выполнения команды, либо об ошибке.
         /// </summary>
         /// <param name="message"></param>
         /// <param name="chat"></param>
