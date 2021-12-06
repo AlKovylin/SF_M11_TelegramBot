@@ -80,12 +80,9 @@ namespace TelegramBot.Commands
         /// <param name="chat"></param>
         public void AddCallBack(Conversation chat)
         {
-            if (chat.CheckDictionary())//если словарь пуст - тренировка не начнётся
-            {
-                trainingChats.Add(chat.GetId(), chat);
+            trainingChats.Add(chat.GetId(), chat);
 
-                this.botClient.OnCallbackQuery += Bot_Callback;
-            }
+            this.botClient.OnCallbackQuery += Bot_Callback;
         }
         /// <summary>
         /// Отменяет подписку на событие нажатия кнопок клавиатуры Тренировка.
@@ -111,12 +108,16 @@ namespace TelegramBot.Commands
             switch (e.CallbackQuery.Data)
             {
                 case "rustoeng":
+                    ResetTrainingDirection(id);
+
                     training.Add(id, TrainingType.RusToEng);
 
                     text = chat.GetTrainingWord(TrainingType.RusToEng);
 
                     break;
                 case "engtorus":
+                    ResetTrainingDirection(id);
+
                     training.Add(id, TrainingType.EngToRus);
 
                     text = chat.GetTrainingWord(TrainingType.EngToRus);
@@ -126,6 +127,11 @@ namespace TelegramBot.Commands
             }
 
             chat.IsTraningInProcess = true;
+
+            activeWord.Clear();//устраняет ошибку в следующей строке возникающую при рандомном выборе того-же слова, что и в предыдущий раз
+                               //устраняет ошибку при проверке правильности введённого слова после выбора другого нарпавления тренировки
+                               //при повторном запуске тренировки
+
             activeWord.Add(id, text);
 
             if (trainingChats.ContainsKey(id))
@@ -189,6 +195,18 @@ namespace TelegramBot.Commands
         public string ReturnErrText()
         {
             return "Словарь пуст. Начните с добавления слов.";
+        }
+        /// <summary>
+        /// Удаляет запись о направлении тренировки для конкретного чата. Иначе возникает ошибка поиска слова для проверки
+        /// при повторном начале тренировки.
+        /// </summary>
+        /// <param name="id"></param>
+        private void ResetTrainingDirection(long id)
+        {
+            if (training.ContainsKey(id))
+            {
+                training.Remove(id);
+            }
         }
     }
 }

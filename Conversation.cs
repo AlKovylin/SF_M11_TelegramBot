@@ -136,8 +136,8 @@ namespace TelegramBot
             switch (type)
             {
                 case TrainingType.EngToRus:
-                    control = dictionary.Values.FirstOrDefault(x => x.English == word);//ищем проверяемое слово в библиотеке
-                    result = control.Russian == answer;//сверяем правильность перевода
+                    if ((control = dictionary.Values.FirstOrDefault(x => x.English == word)) != null)//ищем проверяемое слово в библиотеке
+                        result = control.Russian == answer;//сверяем правильность перевода
                     break;
 
                 case TrainingType.RusToEng:
