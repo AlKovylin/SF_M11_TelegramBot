@@ -20,7 +20,7 @@ namespace TelegramBot
         /// </summary>
         private List<Message> telegramMessages;
         /// <summary>
-        /// Библиотека слов (рус/eng/тема) данного чата.
+        /// Словарь (рус/eng/тема) данного чата.
         /// </summary>
         public Dictionary<string, Word> dictionary;
         /// <summary>
