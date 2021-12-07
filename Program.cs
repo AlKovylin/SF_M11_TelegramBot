@@ -1,6 +1,6 @@
 ﻿// <copyright "Program"	SF_M11_TelegramBot>
 // Copyright (c) 2021
-// name = "MyFirstBot", username = "StudyMyFirstBot"
+// name = "TrainingBot", username = "@StudyMyFirstBot"
 // address: t.me/BotForEnglishLanguageTraining
 // token: "2133806766:AAFrzfC4QZbqEhAn6e-YOZlMUg03UeCPGb0"
 // Bot API: https://core.telegram.org/bots/api
