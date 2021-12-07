@@ -12,10 +12,12 @@ namespace TelegramBot
         /// Поле ITelegramBotClient.
         /// </summary>
         private ITelegramBotClient botClient;
+
         /// <summary>
         /// Поле BotMessageLogic.
         /// </summary>
         private BotMessageLogic logic;
+
         /// <summary>
         /// Создаёт объекты TelegramBotClient и BotMessageLogic.
         /// </summary>
@@ -24,6 +26,7 @@ namespace TelegramBot
             botClient = new TelegramBotClient(BotCredentials.BotToken);
             logic = new BotMessageLogic(botClient);
         }
+
         /// <summary>
         /// Запускает бот. Выполняет подписку на событие получения сообщения.
         /// </summary>
@@ -32,6 +35,7 @@ namespace TelegramBot
             botClient.OnMessage += Bot_OnMessage;
             botClient.StartReceiving();
         }
+
         /// <summary>
         /// Завершает работу бота.
         /// </summary>
@@ -39,6 +43,7 @@ namespace TelegramBot
         {
             botClient.StopReceiving();
         }
+
         /// <summary>
         /// Запускает асинхронную процедуру обработки полученного сообщения.
         /// </summary>

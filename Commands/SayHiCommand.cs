@@ -10,8 +10,9 @@
         /// </summary>
         public SayHiCommand()
         {
-            CommandText = "/saymehi";
+            base.CommandText = "/saymehi";
         }
+
         /// <summary>
         /// Возвращает текстовое сообщение.
         /// </summary>

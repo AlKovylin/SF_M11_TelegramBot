@@ -14,26 +14,29 @@ namespace TelegramBot.Commands
         /// Поле ITelegramBotClient интерфейса клиента.
         /// </summary>
         private ITelegramBotClient botClient;
+
         /// <summary>
         /// Поле буфер для хранения ID клиента и вводимого слова.
         /// </summary>
         private Dictionary<long, Word> Buffer;
+
         /// <summary>
         /// Конструктор. Присваивает полю значение команды. Принимает интерфейс клиента. Создаёт экземпляр буфера.
         /// </summary>
         /// <param name="botClient">Интерфейс клиента.</param>
         public AddWordCommand(ITelegramBotClient botClient)
         {
-            CommandText = "/addword";
+            base.CommandText = "/addword";
 
             this.botClient = botClient;
 
             Buffer = new Dictionary<long, Word>();
         }
+
         /// <summary>
         /// Начинает процедуру ввода нового слова.
         /// </summary>
-        /// <param name="chat"></param>
+        /// <param name="chat">Чат.</param>
         public async void StartProcessAsync(Conversation chat)
         {
             Buffer.Add(chat.GetId(), new Word());
@@ -42,6 +45,7 @@ namespace TelegramBot.Commands
 
             await SendCommandText(text, chat.GetId());//отправляем сообщение в чат клиента
         }
+
         /// <summary>
         /// Формирует запрос на ввод слова в соответствии со стадией переключаемой контроллером. 
         /// Добавляет новое слово в словарь конкретного чата.
@@ -81,11 +85,12 @@ namespace TelegramBot.Commands
 
             await SendCommandText(text, chat.GetId());
         }
+
         /// <summary>
         /// Отправляет сообщение в чат.
         /// </summary>
-        /// <param name="text"></param>
-        /// <param name="chat"></param>
+        /// <param name="text">Текст сообщения.</param>
+        /// <param name="chat">Чат.</param>
         /// <returns></returns>
         private async Task SendCommandText(string text, long chat)
         {

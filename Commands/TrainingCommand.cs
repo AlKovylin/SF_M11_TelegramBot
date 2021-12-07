@@ -15,25 +15,29 @@ namespace TelegramBot.Commands
         /// Поле клиента.
         /// </summary>
         private ITelegramBotClient botClient;
+
         /// <summary>
         /// Поле для хранения: ID клиента/тип тренировки.
         /// </summary>
         private Dictionary<long, TrainingType> training;
+
         /// <summary>
         /// Поле для хранения: ID клиента/чат.
         /// </summary>
         private Dictionary<long, Conversation> trainingChats;
+
         /// <summary>
         /// Поле для хранения: ID клиента/текущее слово.
         /// </summary>
         private Dictionary<long, string> activeWord;
+
         /// <summary>
         /// Конструктор команды "Тренировка".
         /// </summary>
         /// <param name="botClient"></param>
         public TrainingCommand(ITelegramBotClient botClient)
         {
-            CommandText = "/training";
+            base.CommandText = "/training";
 
             this.botClient = botClient;
 
@@ -41,6 +45,7 @@ namespace TelegramBot.Commands
             trainingChats = new Dictionary<long, Conversation>();
             activeWord = new Dictionary<long, string>();
         }
+
         /// <summary>
         /// Возвращает клавиатуру выбора направления тренировки.
         /// </summary>
@@ -66,6 +71,7 @@ namespace TelegramBot.Commands
 
             return keyboard;
         }
+
         /// <summary>
         /// Возвращает информационное сообщение.
         /// </summary>
@@ -74,6 +80,7 @@ namespace TelegramBot.Commands
         {
             return "Выберите тип тренировки. Для окончания тренировки введите команду /stop";
         }
+
         /// <summary>
         /// Выполняет подписку на событие нажатия кнопок клавиатуры Тренировка.
         /// </summary>
@@ -84,6 +91,7 @@ namespace TelegramBot.Commands
 
             this.botClient.OnCallbackQuery += Bot_Callback;
         }
+
         /// <summary>
         /// Отменяет подписку на событие нажатия кнопок клавиатуры Тренировка.
         /// </summary>
@@ -91,6 +99,7 @@ namespace TelegramBot.Commands
         {
             this.botClient.OnCallbackQuery -= Bot_Callback;
         }
+
         /// <summary>
         /// Обработка события нажатия кнопок клавиатуры Тренировка.
         /// </summary>
@@ -144,6 +153,7 @@ namespace TelegramBot.Commands
             DelCallBack();//чтобы данным экземпляром клавиатуры можно было воспользоваться только один раз
                           //также устраняет проблему, когда вызвана одна клавиатура, а срабатывает CallBack другой клавиатуры
         }
+
         /// <summary>
         /// Производит проверку корректности перевода, формирует ответ, отправляет в чат следующее слово.
         /// </summary>
@@ -178,6 +188,7 @@ namespace TelegramBot.Commands
 
             await botClient.SendTextMessageAsync(chatId: chat.GetId(), text: text);
         }
+
         /// <summary>
         /// Проверяет возможность выполнения команды по дополнительным критериям. Здесь наличие слов в словаре конкретного чата.
         /// </summary>
@@ -187,6 +198,7 @@ namespace TelegramBot.Commands
         {
             return chat.CheckDictionary();
         }
+
         /// <summary>
         /// Возвращает сообщение если использование клавиатуры не возможно.
         /// </summary>
@@ -195,6 +207,7 @@ namespace TelegramBot.Commands
         {
             return "Словарь пуст. Начните с добавления слов.";
         }
+
         /// <summary>
         /// Удаляет запись о направлении тренировки для конкретного чата. Иначе возникает ошибка поиска слова для проверки
         /// при повторном начале тренировки.

@@ -14,14 +14,17 @@ namespace TelegramBot
         /// Поле класса формирующего диалог сообщения.
         /// </summary>
         private Messenger messanger;
+
         /// <summary>
         /// Поле/библотека для хранения списка чатов.
         /// </summary>
         private Dictionary<long, Conversation> chatList;
+
         /// <summary>
         /// Поле ITelegramBotClient.
         /// </summary>
         private ITelegramBotClient botClient;
+
         /// <summary>
         /// Конструктор. Принимает ITelegramBotClient. Инициализирует экземпляр Messenger и поле/библотеку для хранения списка чатов.
         /// </summary>
@@ -32,6 +35,7 @@ namespace TelegramBot
             messanger = new Messenger(botClient);
             chatList = new Dictionary<long, Conversation>();
         }
+
         /// <summary>
         /// Запускает процедуру обработки входящего сообщения по ID чата. Новый чат добавляет в список чатов.
         /// </summary>
@@ -54,6 +58,7 @@ namespace TelegramBot
 
             await SendMessage(chat);
         }
+
         /// <summary>
         /// Запускает процедуру обработки полученного сообщения, формирования и отправки ответного сообщения.
         /// </summary>

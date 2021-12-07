@@ -16,21 +16,24 @@ namespace TelegramBot.Commands
         /// <summary>
         /// Предоставляет интерфейс клиента.
         /// </summary>
-        ITelegramBotClient botClient;
+        private ITelegramBotClient botClient;
+
         /// <summary>
         /// Поле чата.
         /// </summary>
-        Conversation chat;
+        private Conversation chat;
+
         /// <summary>
-        /// Конструктор. Присваивает полю значение команды. Получает объект клиента.
+        /// Конструктор. Присваивает полю значение команды. Получает и иннициализирует объект клиента.
         /// </summary>
         /// <param name="botClient">Объект клиента.</param>
         public ShowDictionaryCommand(ITelegramBotClient botClient)
         {
             this.botClient = botClient;
 
-            CommandText = "/dictionary";
+            base.CommandText = "/dictionary";
         }
+
         /// <summary>
         /// Возвращает объект клавиатуры.
         /// </summary>
@@ -56,24 +59,27 @@ namespace TelegramBot.Commands
 
             return keyboard;
         }
+
         /// <summary>
         /// Выполняет подписку на событие нажатия кнопок клавиатуры.
         /// </summary>
-        /// <param name="chat"></param>
+        /// <param name="chat">Чат.</param>
         public void AddCallBack(Conversation chat)
         {
             this.chat = chat;
             this.botClient.OnCallbackQuery += Bot_Callback;
         }
+
         /// <summary>
-        /// Отменяет подписку на событие нажатия кнопок клавиатуры Тренировка.
+        /// Отменяет подписку на событие нажатия кнопок клавиатуры.
         /// </summary>
         private void DelCallBack()
         {
             this.botClient.OnCallbackQuery -= Bot_Callback;
         }
+
         /// <summary>
-        /// Обрабатывает событие нажатия кнопок клавиатуры Поэты.
+        /// Обрабатывает событие нажатия кнопок клавиатуры.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -105,31 +111,35 @@ namespace TelegramBot.Commands
             DelCallBack();//чтобы данным экземпляром клавиатуры можно было воспользоваться только один раз
                           //также устраняет проблему, когда вызвана одна клавиатура, а срабатывает CallBack другой клавиатуры
         }
+
         /// <summary>
         /// Возвращает информационное сообщение - пояснение к клавиатуре.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>"Выберите тип сортировки словаря."</returns>
         public string InformationalMessage()
         {
             return "Выберите тип сортировки словаря.";
         }
+
         /// <summary>
         /// Проверяет возможность выполнения команды
         /// </summary>
-        /// <param name="chat"></param>
+        /// <param name="chat">Чат.</param>
         /// <returns></returns>
         public bool CheckPossibility(Conversation chat)
         {
             return chat.CheckDictionary();
         }
+
         /// <summary>
         /// Возвращает сообщение о причине невозможности выполнения.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>"Словарь пуст. Начните с добавления слов."</returns>
         public string ReturnErrText()
         {
             return "Словарь пуст. Начните с добавления слов.";
         }
+
         /// <summary>
         /// Возвращает словарь отсортированный по алфавиту.
         /// </summary>
@@ -143,7 +153,7 @@ namespace TelegramBot.Commands
             ///////////////////////////////////////////////////
 
             ///////а эту закамментить///////
-            Dictionary<string, Word> Temp = chat.GetDictionary();
+            Dictionary<string, Word> Temp = chat.dictionary;
 
             Dictionary<string, Word> dictionary = new Dictionary<string, Word>();
 
@@ -154,6 +164,7 @@ namespace TelegramBot.Commands
 
             return dictionary;
         }
+
         /// <summary>
         /// Возвращает словарь отсортированный по темам.
         /// </summary>
@@ -167,7 +178,7 @@ namespace TelegramBot.Commands
             ///////////////////////////////////////////////////
             
             ///////а эту закамментить///////
-            Dictionary<string, Word> Temp = chat.GetDictionary();
+            Dictionary<string, Word> Temp = chat.dictionary;
 
             Dictionary<string, Word> dictionary = new Dictionary<string, Word>();
 

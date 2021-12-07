@@ -5,8 +5,14 @@ namespace TelegramBot
 {
     class DictionaryForTest
     {
+        /// <summary>
+        /// Поле для хранения словаря.
+        /// </summary>
         public Dictionary<string, Word> dictionary = new Dictionary<string, Word>();
 
+        /// <summary>
+        /// Конструктор. Инициализирует словарь.
+        /// </summary>
         public DictionaryForTest()
         {
             dictionary.Add("стол", new Word { English = "table", Russian = "стол", Theme = "мебель" });

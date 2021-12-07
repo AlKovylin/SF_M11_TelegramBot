@@ -10,8 +10,9 @@
         /// </summary>
         public DeleteWordCommand()
         {
-            CommandText = "/deleteword";
+            base.CommandText = "/deleteword";
         }
+
         /// <summary>
         /// Выполняет удаление слова из библиотеки.
         /// </summary>
@@ -36,6 +37,7 @@
                 return false;
             }            
         }
+
         /// <summary>
         /// Возвращает сообщение об успешном выполнении команды.
         /// </summary>

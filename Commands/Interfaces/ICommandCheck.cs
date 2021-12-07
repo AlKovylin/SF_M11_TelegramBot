@@ -16,6 +16,7 @@ namespace TelegramBot.Commands
         /// <param name="chat"></param>
         /// <returns></returns>
         bool CheckPossibility(Conversation chat);
+
         /// <summary>
         /// Возвращает сообщение о причине невозможности выполнения.
         /// </summary>

@@ -12,6 +12,7 @@ namespace TelegramBot
         /// Поле для хранения ID чата и текущей стадии добавления слова.
         /// </summary>
         private Dictionary<long, AddingState> ChatAdding;
+
         /// <summary>
         /// Конструктор. Создаёт экземпляр библиотеки для хранения ID чата и стадии.
         /// </summary>
@@ -19,6 +20,7 @@ namespace TelegramBot
         {
             ChatAdding = new Dictionary<long, AddingState>();
         }
+
         /// <summary>
         /// Обозначает начало процесса добавления слова, записывая в поле для хранения ID чата и текущую стадию (первую).
         /// </summary>
@@ -27,6 +29,7 @@ namespace TelegramBot
         {
             ChatAdding.Add(chat.GetId(), AddingState.Russian);
         }
+
         /// <summary>
         /// Выполняет переход к следующей стадии. При достижении стадии "Finish" очищает поле для хранения текущей стадии.
         /// </summary>
@@ -42,6 +45,7 @@ namespace TelegramBot
                 ChatAdding.Remove(chat.GetId());
             }
         }
+
         /// <summary>
         /// Возвращает текущую стадию добавления слова.
         /// </summary>

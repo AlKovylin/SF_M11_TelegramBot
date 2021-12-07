@@ -9,10 +9,11 @@
         /// Поле хранящее текст команды.
         /// </summary>
         public string CommandText;
+
         /// <summary>
         /// Проверяет соответствие входящей команды.
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">Сообщение из чата для проверки.</param>
         /// <returns>True/false</returns>
         public bool CheckMessage(string message)
         {

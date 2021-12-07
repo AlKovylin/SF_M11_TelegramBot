@@ -15,22 +15,27 @@ namespace TelegramBot
         /// Переменная чата Telegram.Bot.Types.
         /// </summary>
         private Chat telegramChat;
+
         /// <summary>
         /// Хранит список всех поступивших сообщений чата.
         /// </summary>
         private List<Message> telegramMessages;
+
         /// <summary>
         /// Словарь (рус/eng/тема) данного чата.
         /// </summary>
         public Dictionary<string, Word> dictionary;
+
         /// <summary>
         /// Флаг сигнализирующий о том, что идёт процесс добавления слова в словарь.
         /// </summary>
         public bool IsAddingInProcess;
+
         /// <summary>
         /// Флаг сигнализирующий о том, что идёт тренировка.
         /// </summary>
         public bool IsTraningInProcess;
+
         /// <summary>
         /// Конструктор. Принимает чат. Инициализирует список всех поступивших сообщений чата и библиотеку слов (рус/eng/тема) данного чата.
         /// </summary>
@@ -41,6 +46,7 @@ namespace TelegramBot
             telegramMessages = new List<Message>();
             dictionary = new Dictionary<string, Word>();
         }
+
         /// <summary>
         /// Добавляет полученное сообщение в список сообщений чата.
         /// </summary>
@@ -49,6 +55,7 @@ namespace TelegramBot
         {
             telegramMessages.Add(message);
         }
+
         /// <summary>
         /// Добавляет слово в библиотеку слов данного чата.
         /// </summary>
@@ -58,6 +65,7 @@ namespace TelegramBot
         {
             dictionary.Add(key, word);
         }
+
         /// <summary>
         /// Удаляет все сообщения из списка сообщений чата.
         /// </summary>
@@ -65,6 +73,7 @@ namespace TelegramBot
         {
             telegramMessages.Clear();
         }
+
         /// <summary>
         /// Возвращает список всех сообщений чата.
         /// </summary>
@@ -83,16 +92,19 @@ namespace TelegramBot
 
             return textMessages;
         }
+
         /// <summary>
         /// Возвращает ID чата.
         /// </summary>
         /// <returns></returns>
         public long GetId() => telegramChat.Id;
+
         /// <summary>
         /// Возвращает последнее поступившее сообщение.
         /// </summary>
         /// <returns></returns>
         public string GetLastMessage() => telegramMessages[telegramMessages.Count - 1].Text;
+
         /// <summary>
         /// Возвращает случайное слово из библиотеки слов для тренировки в звамсимости от направления тренировки.
         /// </summary>
@@ -120,6 +132,7 @@ namespace TelegramBot
 
             return text;
         }
+
         /// <summary>
         /// Проверяет соответствие перевода.
         /// </summary>
@@ -148,6 +161,7 @@ namespace TelegramBot
 
             return result;
         }
+
         /// <summary>
         /// Проверяет наличие слов в словаре.
         /// </summary>
@@ -155,14 +169,6 @@ namespace TelegramBot
         public bool CheckDictionary()
         {
             return dictionary.Count > 0 ? true : false;
-        }
-        /// <summary>
-        /// Возвращает словарь.
-        /// </summary>
-        /// <returns></returns>
-        public Dictionary<string, Word> GetDictionary()
-        {
-            return dictionary;
         }
     }
 }

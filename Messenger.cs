@@ -14,10 +14,12 @@ namespace TelegramBot
         /// Поле ITelegramBotClient.
         /// </summary>
         private ITelegramBotClient botClient;
+
         /// <summary>
         /// Экземпляр класса CommandParser.
         /// </summary>
         private CommandParser parser;
+
         /// <summary>
         /// Конструктор. Принимает ITelegramBotClient. Инициализирует CommandParser и запускает функцию регистрации команд.
         /// </summary>
@@ -29,6 +31,7 @@ namespace TelegramBot
 
             RegisterCommands();
         }
+
         /// <summary>
         /// Добавляет объекты команд в список команд экземпляра анализатора команд CommandParser.
         /// </summary>
@@ -42,6 +45,7 @@ namespace TelegramBot
             parser.AddCommand(new StopTrainingCommand());
             parser.AddCommand(new ShowDictionaryCommand(botClient));
         }
+
         /// <summary>
         /// Сортировщик входящих сообщений. Проверяет не происходит ли в данный момент выполнение каких-то последовательностей требующих продолжения выполнения
         /// и либо запускает следующие итерации, либо передаёт управление функции обеспечивающей запуск выполнения полученной команды, либо отправляет в чат сообщение
@@ -78,6 +82,7 @@ namespace TelegramBot
                 await SendText(chat, text);//и передаём его в чат
             }
         }
+
         /// <summary>
         /// Обеспечивает выполнение действий в соответствии с командой из чата.
         /// </summary>
@@ -118,6 +123,7 @@ namespace TelegramBot
                 parser.StartAddingWord(command, chat);
             }
         }
+
         /// <summary>
         /// Возврашает сообщение о не зарегистрированной команде
         /// </summary>
@@ -128,6 +134,7 @@ namespace TelegramBot
 
             return text;
         }
+
         /// <summary>
         /// Передаёт в чат текстовое сообщение.
         /// </summary>
@@ -138,6 +145,7 @@ namespace TelegramBot
         {
             await botClient.SendTextMessageAsync(chatId: chat.GetId(), text: text);
         }
+
         /// <summary>
         /// Передаёт в чат клавиатуру.
         /// </summary>
@@ -149,6 +157,7 @@ namespace TelegramBot
         {
             await botClient.SendTextMessageAsync(chatId: chat.GetId(), text: text, replyMarkup: keyboard);
         }
+
         /// <summary>
         /// Вызывает процедуры: формирование клавиатуры, поясняющего её назначение сообщения, 
         /// подписки на событие нажатия кнопок, отправку в чат.

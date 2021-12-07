@@ -13,10 +13,12 @@ namespace TelegramBot
         /// Список объектов команд бота.
         /// </summary>
         private List<IChatCommand> Command;
+
         /// <summary>
         /// Поле класса контроллера добавления слова в словарь.
         /// </summary>
         private AddingController addingController;
+
         /// <summary>
         /// Конструктор. Инициализирует список команд бота и AddingController.
         /// </summary>
@@ -25,6 +27,7 @@ namespace TelegramBot
             Command = new List<IChatCommand>();
             addingController = new AddingController();
         }
+
         /// <summary>
         /// Добавляет объект команды в список объектов команд.
         /// </summary>
@@ -33,6 +36,7 @@ namespace TelegramBot
         {
             Command.Add(chatCommand);
         }
+
         /// <summary>
         /// Проверяет наличие команды в списке. 
         /// </summary>
@@ -42,6 +46,7 @@ namespace TelegramBot
         {
             return Command.Exists(x => x.CheckMessage(message));
         }
+
         /// <summary>
         /// Проверяет реализует ли данная команда IChatTextCommand.
         /// </summary>
@@ -53,6 +58,7 @@ namespace TelegramBot
 
             return command is IChatTextCommand;//является ли command объектом типа IChatTextCommand?
         }
+
         /// <summary>
         /// Проверяет реализует ли данная команда IKeyBoardCommand.
         /// </summary>
@@ -64,6 +70,7 @@ namespace TelegramBot
 
             return command is IKeyBoardCommand;
         }
+
         /// <summary>
         /// Проверяет реализует ли данная команда IKeyBoardCommandCheck.
         /// </summary>
@@ -75,6 +82,7 @@ namespace TelegramBot
 
             return command is ICommandCheck;
         }
+
         /// <summary>
         /// Проверяет возможность выполнения команды по дополнительным критериям.
         /// </summary>
@@ -86,6 +94,7 @@ namespace TelegramBot
 
             return command.CheckPossibility(chat);
         }
+
         /// <summary>
         /// Возвращает сообщение если использование клавиатуры не возможно.
         /// </summary>
@@ -98,6 +107,7 @@ namespace TelegramBot
 
             return command.ReturnErrText();
         }
+
         /// <summary>
         /// Возвращает из объекта команды, выполняющей конкретное действие, текстовое 
         /// сообщение об успешности выполнения команды, либо об ошибке.
@@ -119,6 +129,7 @@ namespace TelegramBot
 
             return command.ReturnText();
         }
+
         /// <summary>
         /// Возвращает из обекта команды сообщение - пояснение к клавиатуре.
         /// </summary>
@@ -130,6 +141,7 @@ namespace TelegramBot
 
             return command.InformationalMessage();
         }
+
         /// <summary>
         /// Возвращает из объекта команды клавиатуру.
         /// </summary>
@@ -141,6 +153,7 @@ namespace TelegramBot
 
             return command.ReturnKeyBoard();
         }
+
         /// <summary>
         /// Обеспечивает объекту команды подписку на событие нажатия кнопки.
         /// </summary>
@@ -151,6 +164,7 @@ namespace TelegramBot
             var command = Command.Find(x => x.CheckMessage(message)) as IKeyBoardCommand;
             command.AddCallBack(chat);
         }
+
         /// <summary>
         /// Проверяет соответствует ли полученное сообщение коменде добавления нового слова в словарь.
         /// </summary>
@@ -162,6 +176,7 @@ namespace TelegramBot
 
             return command is AddWordCommand;//проверяем является ли найденный объект нужным типом
         }
+
         /// <summary>
         /// Запускает процедуру ввода нового слова в словарь конкретного чата.
         /// </summary>
@@ -174,6 +189,7 @@ namespace TelegramBot
             addingController.AddFirstState(chat);
             command.StartProcessAsync(chat);
         }
+
         /// <summary>
         /// Выполняет переход к следующей стадии добавления слова в словарь.
         /// </summary>
@@ -187,6 +203,7 @@ namespace TelegramBot
 
             addingController.NextStage(chat);
         }
+
         /// <summary>
         /// Позволяет продолжить тренировку.
         /// </summary>

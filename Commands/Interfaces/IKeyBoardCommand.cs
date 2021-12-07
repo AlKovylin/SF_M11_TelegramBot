@@ -14,11 +14,13 @@ namespace TelegramBot.Commands
         /// </summary>
         /// <returns></returns>
         InlineKeyboardMarkup ReturnKeyBoard();
+
         /// <summary>
         /// Функция выполняющая подписку на событие нажатия кнопок клавиатуры.
         /// </summary>
         /// <param name="chat"></param>
-        void AddCallBack(Conversation chat);                
+        void AddCallBack(Conversation chat);     
+        
         /// <summary>
         /// Функция возвращающая информационное сообщение - пояснение к клавиатуре.
         /// </summary>

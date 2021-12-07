@@ -7,8 +7,9 @@
     {
         public StopTrainingCommand()
         {
-            CommandText = "/stop";
+            base.CommandText = "/stop";
         }
+
         /// <summary>
         /// Выполняет остановку тренировки.
         /// </summary>
@@ -19,6 +20,7 @@
             chat.IsTraningInProcess = false;//выставляем флаг, разрешаем запуск новой тренировки
             return !chat.IsTraningInProcess;
         }
+
         /// <summary>
         /// Возвращает строку "Тренировка остановлена!"
         /// </summary>

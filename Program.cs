@@ -12,6 +12,10 @@ namespace TelegramBot
 {
     class Program
     {
+        /// <summary>
+        /// Точка входа.
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             var bot = new BotWorker();

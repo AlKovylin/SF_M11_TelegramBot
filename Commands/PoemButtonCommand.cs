@@ -15,7 +15,7 @@ namespace TelegramBot.Commands
         /// <summary>
         /// Предоставляет интерфейс клиента.
         /// </summary>
-        ITelegramBotClient botClient;
+        private ITelegramBotClient botClient;
         /// <summary>
         /// Конструктор. Присваивает полю значение команды. Получает объект клиента.
         /// </summary>
@@ -24,10 +24,11 @@ namespace TelegramBot.Commands
         {
             this.botClient = botClient;
 
-            CommandText = "/poembuttons";
+            base.CommandText = "/poembuttons";
         }
+
         /// <summary>
-        /// Выполняет подписку на событие нажатия кнопок клавиатуры Поэты.
+        /// Выполняет подписку на событие нажатия кнопок клавиатуры.
         /// </summary>
         /// <param name="chat">Чат.</param>
         public void AddCallBack(Conversation chat)
@@ -35,15 +36,17 @@ namespace TelegramBot.Commands
             //this.botClient.OnCallbackQuery -= Bot_Callback;
             this.botClient.OnCallbackQuery += Bot_Callback;
         }
+
         /// <summary>
-        /// Отменяет подписку на событие нажатия кнопок клавиатуры Тренировка.
+        /// Отменяет подписку на событие нажатия кнопок клавиатуры.
         /// </summary>
         private void DelCallBack()
         {
             this.botClient.OnCallbackQuery -= Bot_Callback;
         }
+
         /// <summary>
-        /// Обрабатывает событие нажатия кнопок клавиатуры Поэты.
+        /// Обрабатывает событие нажатия кнопок клавиатуры.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -74,6 +77,7 @@ namespace TelegramBot.Commands
             DelCallBack();//чтобы данным экземпляром клавиатуры можно было воспользоваться только один раз
                           //также устраняет проблему, когда вызвана одна клавиатура, а срабатывает CallBack другой клавиатуры
         }
+
         /// <summary>
         /// Формирует и возвращает клавиатуру.
         /// </summary>
@@ -99,6 +103,7 @@ namespace TelegramBot.Commands
 
             return keyboard;
         }
+
         /// <summary>
         /// Возвращает сообщение поясняющее назначение клавиатуры.
         /// </summary>
@@ -107,10 +112,11 @@ namespace TelegramBot.Commands
         {
             return "Выберите поэта";
         }
+
         /// <summary>
         /// Проверяет возможность выполнения команды по дополнительным критериям. Здесь наличие слов в словаре конкретного чата.
         /// </summary>
-        /// <param name="chat"></param>
+        /// <param name="chat">Чат.</param>
         /// <returns></returns>
         public bool CheckPossibility(Conversation chat)
         {
