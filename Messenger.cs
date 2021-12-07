@@ -40,6 +40,7 @@ namespace TelegramBot
             parser.AddCommand(new DeleteWordCommand());
             parser.AddCommand(new TrainingCommand(botClient));
             parser.AddCommand(new StopTrainingCommand());
+            parser.AddCommand(new ShowDictionaryCommand(botClient));
         }
         /// <summary>
         /// Сортировщик входящих сообщений. Проверяет не происходит ли в данный момент выполнение каких-то последовательностей требующих продолжения выполнения

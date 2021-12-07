@@ -73,7 +73,7 @@ namespace TelegramBot
         {
             var command = Command.Find(x => x.CheckMessage(message));
 
-            return command is IKeyBoardCommandCheck;
+            return command is ICommandCheck;
         }
         /// <summary>
         /// Проверяет возможность выполнения команды по дополнительным критериям.
@@ -82,7 +82,7 @@ namespace TelegramBot
         /// <returns></returns>
         public bool ButtonCommandCheckPossibility(string message, Conversation chat)
         {
-            var command = Command.Find(x => x.CheckMessage(message)) as IKeyBoardCommandCheck;
+            var command = Command.Find(x => x.CheckMessage(message)) as ICommandCheck;
 
             return command.CheckPossibility(chat);
         }
@@ -94,7 +94,7 @@ namespace TelegramBot
         /// <returns></returns>
         public string GetErrCheckText(string message)
         {
-            var command = Command.Find(x => x.CheckMessage(message)) as IKeyBoardCommandCheck;
+            var command = Command.Find(x => x.CheckMessage(message)) as ICommandCheck;
 
             return command.ReturnErrText();
         }

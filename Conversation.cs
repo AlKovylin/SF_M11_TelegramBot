@@ -156,5 +156,13 @@ namespace TelegramBot
         {
             return dictionary.Count > 0 ? true : false;
         }
+        /// <summary>
+        /// Возвращает словарь.
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, Word> GetDictionary()
+        {
+            return dictionary;
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace TelegramBot.Commands
     /// <summary>
     /// Класс команды для проведения тренировки
     /// </summary>
-    public class TrainingCommand : AbstractCommand, IKeyBoardCommand, IKeyBoardCommandCheck
+    public class TrainingCommand : AbstractCommand, IKeyBoardCommand, ICommandCheck
     {
         /// <summary>
         /// Поле клиента.
@@ -101,7 +101,6 @@ namespace TelegramBot.Commands
             var text = "";
 
             var id = e.CallbackQuery.Message.Chat.Id;
-
 
             var chat = trainingChats[id];
 
